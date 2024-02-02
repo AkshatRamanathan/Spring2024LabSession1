@@ -4,6 +4,8 @@
  */
 package MainPackage;
 
+import javax.swing.ImageIcon;
+
 /**
  *
  * @author akshatr
@@ -11,6 +13,15 @@ package MainPackage;
 public class User {
     String name;
     String age;
+    ImageIcon pic;
+
+    public ImageIcon getPic() {
+        return pic;
+    }
+
+    public void setPic(ImageIcon pic) {
+        this.pic = pic;
+    }
 
     public String getName() {
         return name;

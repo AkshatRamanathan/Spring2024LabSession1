@@ -4,8 +4,13 @@
  */
 package MainPackage;
 
+import java.awt.image.BufferedImage;
+import java.awt.Image;
+import javax.imageio.ImageIO;
+import javax.swing.ImageIcon;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
+import javax.swing.filechooser.FileNameExtensionFilter;
 
 /**
  *
@@ -135,9 +140,25 @@ public class MainFrame extends javax.swing.JFrame {
         User newObj = new User();
         newObj.setName(nameTextField.getText());
         newObj.setAge(ageTextField.getText());
-        String output = "Name: " + newObj.getName() + "\nAge: " + newObj.getAge();
-     
-        JOptionPane.showMessageDialog(this, output);
+        JFileChooser file = new JFileChooser();
+        if (file.showSaveDialog(null) == JFileChooser.APPROVE_OPTION) {
+            try {
+                file.setFileFilter(new FileNameExtensionFilter("Image Files", "jpg", "png", "gif", "jpeg"));
+                BufferedImage img = ImageIO.read(file.getSelectedFile());
+                Image edited_image = img.getScaledInstance(60, 80, Image.SCALE_SMOOTH);
+                if (edited_image != null) {
+//                    imgLabel.setText(file.getSelectedFile().getAbsolutePath());
+                    newObj.setPic(new ImageIcon(edited_image));
+                }
+                String output = "Name: " + newObj.getName() + "\nAge: " + newObj.getAge();
+                JOptionPane.showMessageDialog(this, output, "OUTPUT", HEIGHT, newObj.getPic());
+
+            } catch (Exception ex) {
+                JOptionPane.showMessageDialog(this, "Please upload image correctly.", "Error Message", JOptionPane.ERROR_MESSAGE);
+                ex.printStackTrace();
+            }
+        }
+
 
     }//GEN-LAST:event_onSubmitButtonClick
 
